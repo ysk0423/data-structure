@@ -1,0 +1,40 @@
+name: OpenAI Reviewer
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches-ignore:
+      - main
+  pull_request_review_comment:
+    types: [created]
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref || github.sha }}-${{ github.workflow }}-${{ github.event_name == 'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: coderabbitai/openai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: true
+          review_comment_lgtm: false
+          openai_heavy_model: gpt-4
+          language: ja-JP
+          openai_timeout_ms: 600000
+          summarize: |
+            下記の内容をmarkdownで記載してください。
+
+              - *概要*: PR全体に関する要約。
+              - *変更点*: ファイルとその要約のテーブル。a
+
+            この要約には、追加のコメントを避けてください。
