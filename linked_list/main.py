@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any
+from typing import Any, Optional
 
 class Node(object):
   def __init__(self, data: Any, next_node: Node = None):
@@ -7,7 +7,7 @@ class Node(object):
     self.next = next_node
 
 class LinkedList(object):
-  def __init__(self, head=None) -> None:
+  def __init__(self, head: Optional[Node] = None) -> None:
     self.head = head
 
   def append(self, data: Any) -> None:
