@@ -23,5 +23,3 @@ class LinkedList(object):
       last_node = last_node.next
     # 最後のノードの次のノードとして新しいノードを登録する。
     last_node.next = new_node
-
-  
