@@ -23,3 +23,21 @@ class LinkedList(object):
       last_node = last_node.next
     # 最後のノードの次のノードとして新しいノードを登録する。
     last_node.next = new_node
+
+  def insert(self, data: Any) -> None:
+    new_node = Node(data)
+    new_node.next = self.head
+    self.head = new_node
+
+if __name__ == '__main__':
+  l = LinkedList()
+  l.append(1)
+  l.append(2)
+  l.append(3)
+  l.insert(0)
+  print(l.head.data)
+  print(l.head.next.data)
+  print(l.head.next.next.data)
+
+
+
