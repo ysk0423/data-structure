@@ -29,15 +29,19 @@ class LinkedList(object):
     new_node.next = self.head
     self.head = new_node
 
+  def print(self) -> None:
+    current_node = self.head
+    while current_node:
+      print(current_node.data)
+      current_node = current_node.next
+
 if __name__ == '__main__':
   l = LinkedList()
   l.append(1)
   l.append(2)
   l.append(3)
   l.insert(0)
-  print(l.head.data)
-  print(l.head.next.data)
-  print(l.head.next.next.data)
+  l.print()
 
 
 
