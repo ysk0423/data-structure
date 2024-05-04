@@ -35,12 +35,35 @@ class LinkedList(object):
       print(current_node.data)
       current_node = current_node.next
 
+  def remove(self, data: Any) -> None:
+    current_node = self.head
+
+    # 1件目の場合
+    if current_node and current_node.data == data:
+      self.head = current_node.next
+      current_node = None
+      return
+    
+    # 削除対象を探すための走査
+    previous_node = None
+    while current_node and current_node.data != data:
+      previous_node = current_node
+      current_node = current_node.next
+    
+    # 削除対象が存在しなかった場合
+    if current_node is None:
+      return
+    
+    # 削除対象の場合
+    previous_node.next = current_node.next
+    
 if __name__ == '__main__':
   l = LinkedList()
   l.append(1)
   l.append(2)
   l.append(3)
   l.insert(0)
+  l.remove(2)
   l.print()
 
 
